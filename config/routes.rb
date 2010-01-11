@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :boards
+
   map.resources :games
 
   map.resources :players

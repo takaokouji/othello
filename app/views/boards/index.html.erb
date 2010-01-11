@@ -1,0 +1,32 @@
+<h1>Listing boards</h1>
+
+<table>
+  <tr>
+    <th>Game</th>
+    <th>Position</th>
+    <th>Width</th>
+    <th>Height</th>
+    <th>Pieces</th>
+    <th>Player</th>
+    <th>Player context</th>
+  </tr>
+
+<% @boards.each do |board| %>
+  <tr>
+    <td><%=h board.game_id %></td>
+    <td><%=h board.position %></td>
+    <td><%=h board.width %></td>
+    <td><%=h board.height %></td>
+    <td><%=h board.pieces %></td>
+    <td><%=h board.player_id %></td>
+    <td><%=h board.player_context %></td>
+    <td><%= link_to 'Show', board %></td>
+    <td><%= link_to 'Edit', edit_board_path(board) %></td>
+    <td><%= link_to 'Destroy', board, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New board', new_board_path %>

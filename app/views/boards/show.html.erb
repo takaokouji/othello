@@ -1,0 +1,38 @@
+<p>
+  <b>Game:</b>
+  <%=h @board.game_id %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%=h @board.position %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @board.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @board.height %>
+</p>
+
+<p>
+  <b>Pieces:</b>
+  <%=h @board.pieces %>
+</p>
+
+<p>
+  <b>Player:</b>
+  <%=h @board.player_id %>
+</p>
+
+<p>
+  <b>Player context:</b>
+  <%=h @board.player_context %>
+</p>
+
+
+<%= link_to 'Edit', edit_board_path(@board) %> |
+<%= link_to 'Back', boards_path %>

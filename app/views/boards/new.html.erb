@@ -1,0 +1,39 @@
+<h1>New board</h1>
+
+<% form_for(@board) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :game_id %><br />
+    <%= f.text_field :game_id %>
+  </p>
+  <p>
+    <%= f.label :position %><br />
+    <%= f.text_field :position %>
+  </p>
+  <p>
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :height %><br />
+    <%= f.text_field :height %>
+  </p>
+  <p>
+    <%= f.label :pieces %><br />
+    <%= f.text_area :pieces %>
+  </p>
+  <p>
+    <%= f.label :player_id %><br />
+    <%= f.text_field :player_id %>
+  </p>
+  <p>
+    <%= f.label :player_context %><br />
+    <%= f.text_area :player_context %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', boards_path %>
