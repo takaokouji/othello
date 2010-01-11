@@ -1,19 +1,1 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  game_id: 1
-  position: 1
-  width: 1
-  height: 1
-  pieces: MyText
-  player_id: 1
-  player_context: MyText
-
-two:
-  game_id: 1
-  position: 1
-  width: 1
-  height: 1
-  pieces: MyText
-  player_id: 1
-  player_context: MyText

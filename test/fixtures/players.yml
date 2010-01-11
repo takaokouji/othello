@@ -1,9 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
-  ai: MyText
+player1:
+  id: 1
+  name: Player1
+  ai: |
+    def solve(*args)
+    end
 
-two:
-  name: MyString
-  ai: MyText
+player2:
+  id: 2
+  name: Player2
+  ai: |
+    def solve(*args)
+    end

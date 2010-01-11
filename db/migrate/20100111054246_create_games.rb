@@ -5,6 +5,8 @@ class CreateGames < ActiveRecord::Migration
       t.timestamp :end_at
       t.integer :first_player_id
       t.integer :second_player_id
+      t.integer :board_width
+      t.integer :board_height
 
       t.timestamps
     end
