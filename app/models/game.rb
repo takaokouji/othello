@@ -21,6 +21,12 @@ class Game < ActiveRecord::Base
   before_save :init_board
 
   def next_piece
+    last_board = boards.last
+    if last_board.player && last_board.player == first_player
+      player = second_player
+    else
+      player = first_player
+    end
     # 次に駒を置くことができる位置の配列を求める。
     # Playerのsolveメソッドで使うためのcontextを用意する。
     #   contextに格納する要素
@@ -35,7 +41,7 @@ class Game < ActiveRecord::Base
               [board_width / 2 - 1, board_height / 2 - 1, first_player_id],
               [board_width / 2, board_height / 2, second_player_id],
              ]
-    boards.create(:player => first_player, :players_context => {}, :pieces => pieces)
+    boards.create(:player => player, :players_context => {}, :pieces => pieces)
   end
 
   private
