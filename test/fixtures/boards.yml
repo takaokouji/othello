@@ -17,7 +17,7 @@
 
 board1:
   id: 1
-  game: game1
+  game_id: 1
   position: 1
   pieces:
     - - 24
