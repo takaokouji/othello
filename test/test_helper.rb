@@ -35,4 +35,10 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def assert_set_equal(expected, actual, message = "")
+    assert_equal([], actual - expected)
+    assert_equal([], expected - actual)
+    assert_equal(expected.length, actual.length)
+  end
 end

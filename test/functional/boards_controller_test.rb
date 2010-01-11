@@ -20,6 +20,7 @@ class BoardsControllerTest < ActionController::TestCase
     assert_redirected_to board_path(assigns(:board))
   end
 
+=begin
   test "should show board" do
     get :show, :id => boards(:one).to_param
     assert_response :success
@@ -42,4 +43,5 @@ class BoardsControllerTest < ActionController::TestCase
 
     assert_redirected_to boards_path
   end
+=end
 end

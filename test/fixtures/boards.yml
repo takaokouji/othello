@@ -1,1 +1,35 @@
+# == Schema Information
+# Schema version: 20100111055400
+#
+# Table name: boards
+#
+#  id              :integer       not null, primary key
+#  game_id         :integer
+#  position        :integer
+#  pieces          :text
+#  player_id       :integer
+#  players_context :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+board1:
+  id: 1
+  game: game1
+  position: 1
+  pieces:
+    - - 24
+      - 25
+      - 1
+    - - 25
+      - 24
+      - 1
+    - - 24
+      - 24
+      - 2
+    - - 25
+      - 25
+      - 2
+  

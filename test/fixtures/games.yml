@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 20100111055400
+#
+# Table name: games
+#
+#  id               :integer       not null, primary key
+#  begin_at         :datetime
+#  end_at           :datetime
+#  first_player_id  :integer
+#  second_player_id :integer
+#  board_width      :integer
+#  board_height     :integer
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 game1:

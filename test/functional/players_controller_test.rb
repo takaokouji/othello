@@ -21,23 +21,23 @@ class PlayersControllerTest < ActionController::TestCase
   end
 
   test "should show player" do
-    get :show, :id => players(:one).to_param
+    get :show, :id => players(:player1).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => players(:one).to_param
+    get :edit, :id => players(:player1).to_param
     assert_response :success
   end
 
   test "should update player" do
-    put :update, :id => players(:one).to_param, :player => { }
+    put :update, :id => players(:player1).to_param, :player => { }
     assert_redirected_to player_path(assigns(:player))
   end
 
   test "should destroy player" do
     assert_difference('Player.count', -1) do
-      delete :destroy, :id => players(:one).to_param
+      delete :destroy, :id => players(:player1).to_param
     end
 
     assert_redirected_to players_path
