@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  begin_at: 2010-01-11 14:42:46
+  end_at: 2010-01-11 14:42:46
+  first_player_id: 1
+  second_player_id: 1
+
+two:
+  begin_at: 2010-01-11 14:42:46
+  end_at: 2010-01-11 14:42:46
+  first_player_id: 1
+  second_player_id: 1

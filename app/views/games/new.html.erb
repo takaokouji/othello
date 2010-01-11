@@ -1,0 +1,27 @@
+<h1>New game</h1>
+
+<% form_for(@game) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :begin_at %><br />
+    <%= f.datetime_select :begin_at %>
+  </p>
+  <p>
+    <%= f.label :end_at %><br />
+    <%= f.datetime_select :end_at %>
+  </p>
+  <p>
+    <%= f.label :first_player_id %><br />
+    <%= f.text_field :first_player_id %>
+  </p>
+  <p>
+    <%= f.label :second_player_id %><br />
+    <%= f.text_field :second_player_id %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', games_path %>
