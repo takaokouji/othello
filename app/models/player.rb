@@ -15,4 +15,13 @@ class Player < ActiveRecord::Base
   def load_ai
     instance_eval(ai)
   end
+
+  def method_missing(name, *args)
+    if name == :solve
+      load_ai
+      return solve(*args)
+    else
+      super
+    end
+  end
 end
