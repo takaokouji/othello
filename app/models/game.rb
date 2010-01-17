@@ -20,6 +20,23 @@ class Game < ActiveRecord::Base
   belongs_to :second_player, :class_name => "Player"
   before_save :init_board
 
+  # ゲームを開始する。
+  def start
+    # TODO: すでにbegin_atとend_atが設定されていた場合は例外。
+    begin_at = Time.now
+    end_at = begin_at + time * 60
+    save!
+  end
+
+  # ゲームを停止する。
+  def stop
+    if end_at.nil?
+      end_at = Time.now
+      save!
+    end
+  end
+
+  # 次の一手を打つ。
   def next_piece
     last_board = boards.last
     if last_board.player && last_board.player == first_player
@@ -38,8 +55,11 @@ class Game < ActiveRecord::Base
     context = Context.new(last_board.pieces, candidates)
 
     # solveをevalする。(Player#solve(context))
-    player.load_ai
-    player.solve(context)
+    begin
+      player.load_ai
+      player.solve(context)
+    rescue Exception
+    end
 
     if context.next_piece
       # contextに設定された駒の位置から新しいBoard(pieces)を作る。

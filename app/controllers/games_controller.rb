@@ -86,7 +86,8 @@ class GamesController < ApplicationController
   # ゲームを開始する。
   def start
     @game = Game.find(params[:id])
-
+    @game.start
+    
     respond_to do |format|
       format.html
       format.xml  { render :xml => @game }
@@ -96,6 +97,7 @@ class GamesController < ApplicationController
   # 次の一手を設定する。
   def next_piece
     @game = Game.find(params[:id])
+    @game.next_piece
 
     respond_to do |format|
       format.html
@@ -106,6 +108,7 @@ class GamesController < ApplicationController
   # ゲームを停止する。
   def stop
     @game = Game.find(params[:id])
+    @game.stop
 
     respond_to do |format|
       format.html

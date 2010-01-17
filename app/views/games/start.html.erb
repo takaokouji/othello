@@ -1,0 +1,48 @@
+<%-
+   pieces = Array.new(@game.board_height) { |i| Array.new(@game.board_width) }
+   @game.boards.last.pieces.each do |x, y, player_id|
+     pieces[y][x] = player_id
+   end
+-%>
+<table border="1">
+<tr>
+<td>　</td>
+<%-
+   @game.board_width.times do |i|
+-%>
+<td><%= i + 1 %></td>
+<%-
+   end
+-%>
+</tr>
+<%-
+   pieces.each_with_index do |ary, y|
+-%>
+<tr>
+<td><%= y + 1 %></td>
+<%-
+     ary.each_with_index do |player_id, x|
+-%>
+<td>
+<%= 
+    case player_id
+    when @game.first_player_id
+      "●"
+    when @game.second_player_id
+      "○"
+    else
+      "　"
+    end
+%>
+</td>
+<%-
+     end
+-%>
+</tr>
+<%-
+   end
+-%>
+</table>
+
+<%= link_to 'Next', :action => :next_piece, :id => @game %> |
+<%= link_to 'Stop', :action => :stop, :id => @game %>
