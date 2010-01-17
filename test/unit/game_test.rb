@@ -12,19 +12,44 @@ class GameTest < ActiveSupport::TestCase
     assert_boards_equal([Board.new_initial_board(game)], game.boards)
   end
 
-  test "next_piece:次の一手を打つ。" do
+  test "next_piece" do
     game = games(:game1)
     assert_difference("game.boards.length") do
       game.next_piece
     end
-    pieces = [
-              [game.board_width / 2 - 1, game.board_height / 2 - 2, game.first_player_id],
-              [game.board_width / 2, game.board_height / 2 - 1, game.first_player_id],
-              [game.board_width / 2 - 1, game.board_height / 2, game.first_player_id],
-              [game.board_width / 2 - 1, game.board_height / 2 - 1, game.first_player_id],
-              [game.board_width / 2, game.board_height / 2, game.second_player_id],
-             ]
+    str = <<EOP
+●　
+●●
+●○
+EOP
+    pieces = string_to_pieces(game.first_player, game.second_player, game.board_width / 2 - 1, game.board_width / 2 - 2, str)
     expected = Board.new(:player => game.first_player, :position => 2, :players_context => {}, :pieces => pieces)
+    assert_board_equal(expected, game.boards.last)
+
+    assert_difference("game.boards.length") do
+      game.next_piece
+    end
+    str = <<EOP
+○●　
+　○●
+　●○
+EOP
+    pieces = string_to_pieces(game.first_player, game.second_player, game.board_width / 2 - 2, game.board_width / 2 - 2, str)
+#    p pieces
+#    p game.boards.last.pieces
+    expected = Board.new(:player => game.second_player, :position => 3, :players_context => {}, :pieces => pieces)
+    assert_board_equal(expected, game.boards.last)
+
+    assert_difference("game.boards.length") do
+      game.next_piece
+    end
+    str = <<EOP
+●●●　
+　　○●
+　　●○
+EOP
+    pieces = string_to_pieces(game.first_player, game.second_player, game.board_width / 2 - 3, game.board_width / 2 - 2, str)
+    expected = Board.new(:player => game.first_player, :position => 4, :players_context => {}, :pieces => pieces)
     assert_board_equal(expected, game.boards.last)
   end
   

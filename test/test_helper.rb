@@ -41,4 +41,27 @@ class ActiveSupport::TestCase
     assert_equal([], expected - actual)
     assert_equal(expected.length, actual.length)
   end
+
+  # 文字列からpiecesの配列を生成する。
+  def string_to_pieces(first_player, second_player, left, top, str)
+    pieces = []
+    x = left
+    y = top
+    str.scan(/./m) do |c|
+      case c
+      when "●"
+        pieces << [x, y, first_player.id]
+        x += 1
+      when "○"
+        pieces << [x, y, second_player.id]
+        x += 1
+      when "　"
+        x += 1
+      else
+        x = left
+        y += 1
+      end
+    end
+    return pieces
+  end
 end

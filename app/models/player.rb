@@ -13,15 +13,6 @@
 class Player < ActiveRecord::Base
   # aiカラムの文字列を元に、このインスタンスにだけsolveメソッドを定義する。
   def load_ai
-    instance_eval(ai)
-  end
-
-  def method_missing(name, *args)
-    if name == :solve
-      load_ai
-      return solve(*args)
-    else
-      super
-    end
+    instance_eval(ai, __FILE__, __LINE__)
   end
 end
