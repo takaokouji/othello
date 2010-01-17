@@ -82,4 +82,34 @@ class GamesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  # ゲームを開始する。
+  def start
+    @game = Game.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @game }
+    end
+  end
+
+  # 次の一手を設定する。
+  def next_piece
+    @game = Game.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @game }
+    end
+  end
+
+  # ゲームを停止する。
+  def stop
+    @game = Game.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @game }
+    end
+  end
 end

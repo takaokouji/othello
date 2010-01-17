@@ -1,6 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :boards
 
+  map.connect("games/start/:id.:format", :controller => :games, :action => :start)
+  map.connect("games/next_piece/:id.:format", :controller => :games, :action => :next_piece)
+  map.connect("games/stop/:id.:format", :controller => :games, :action => :stop)
   map.resources :games
 
   map.resources :players

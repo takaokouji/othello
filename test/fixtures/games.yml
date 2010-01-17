@@ -18,8 +18,7 @@
 
 game1:
   id: 1
-  begin_at: 2010-01-11 14:42:46
-  end_at: 2010-01-11 14:52:46
+  time: 10
   board_width: 50
   board_height: 50
   first_player_id: 1

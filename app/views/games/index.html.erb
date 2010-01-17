@@ -2,22 +2,24 @@
 
 <table>
   <tr>
-    <th>Begin at</th>
-    <th>End at</th>
+    <th>Time</th>
     <th>Board width</th>
     <th>Board height</th>
     <th>First player</th>
     <th>Second player</th>
+    <th>Begin at</th>
+    <th>End at</th>
   </tr>
 
 <% @games.each do |game| %>
   <tr>
-    <td><%=h game.begin_at %></td>
-    <td><%=h game.end_at %></td>
+    <td><%=h game.time %></td>
     <td><%=h game.board_width %></td>
     <td><%=h game.board_height %></td>
     <td><%=h game.first_player_id %></td>
     <td><%=h game.second_player_id %></td>
+    <td><%=h game.begin_at %></td>
+    <td><%=h game.end_at %></td>
     <td><%= link_to 'Show', game %></td>
     <td><%= link_to 'Edit', edit_game_path(game) %></td>
     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
