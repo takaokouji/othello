@@ -123,7 +123,7 @@ class Board < ActiveRecord::Base
               [game.board_width / 2 - 1, game.board_height / 2 - 1, game.second_player_id],
               [game.board_width / 2, game.board_height / 2, game.second_player_id],
              ]
-    return Board.new(:game => game, :position => 1, :pieces => pieces)
+    return Board.new(:game => game, :position => 1, :pieces => pieces, :next_time => game.calc_next_time)
   end
 
   private

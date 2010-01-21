@@ -19,6 +19,7 @@ board1:
   id: 1
   game_id: 1
   position: 1
+  next_time: 10
   pieces:
     - - 24
       - 25

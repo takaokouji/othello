@@ -6,6 +6,7 @@ class CreateBoards < ActiveRecord::Migration
       t.text :pieces
       t.integer :player_id
       t.text :players_context
+      t.integer :next_time
 
       t.timestamps
     end

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'test_helper'
 
 class GameTest < ActiveSupport::TestCase
@@ -35,8 +36,6 @@ EOP
 　●○
 EOP
     pieces = string_to_pieces(game.first_player, game.second_player, game.board_width / 2 - 2, game.board_width / 2 - 2, str)
-#    p pieces
-#    p game.boards.last.pieces
     expected = Board.new(:player => game.second_player, :position => 3, :players_context => {}, :pieces => pieces)
     assert_board_equal(expected, game.boards.last)
 
