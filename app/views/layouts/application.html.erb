@@ -25,6 +25,7 @@ function loaded() {
       <td width="25%" style="text-align: right">
         <%- if logged_in? -%>
           <%= current_user.name ? current_user.name : current_user.login %>
+          | <%= link_to "ヘルプ", help_path, { :title => "ヘルプ" } %>
           | <%= link_to "ログアウト", logout_path, { :title => "ログアウト" } %>
         <%- else -%>
           ログインしていません

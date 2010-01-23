@@ -1,4 +1,32 @@
 <%- if logged_in? -%>
+<div>
+  <h2><%= image_tag "player.png", "align" => "bottom" %>プレイヤー</h2>
+  <%- if current_user.players.empty? -%>
+    プレイヤーが登録されていません。
+  <%- else -%>
+    <table>
+      <tr>
+	<th>状態</th>
+	<th>名前</th>
+	<th>AIの行数</th>
+	<th>成績</th>
+      </tr>
+	
+      <%- current_user.players.each_with_index do |player, i| -%>
+	<tr>
+	  <td><%= player.enable? ? "☆" : "ー" %></td>
+	  <td><%= player.name %> (編集)</td>
+	  <td><%= player.num_ai_lines %></td>
+	  <td><%= player.num_wins %>勝／<%= player.num_loses %>敗</td>
+	</tr>
+      <%- end -%>
+    </table>
+  <%- end -%>
+</div>
+
+<div>
+  <h2><%= image_tag "game.png", "align" => "bottom" %>ゲーム</h2>
+</div>
 <%- else -%>
 <%- form_tag session_path do -%>
 <h2>プログラミングコンテストのアカウント</h2>

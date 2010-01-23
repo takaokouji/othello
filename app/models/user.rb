@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
+
+  has_many :players, :order => "id"
+  before_save :init_players
 
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
@@ -17,8 +21,6 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
-  
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -47,8 +49,14 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
-  protected
-    
-
-
+  private
+  
+  def init_players
+    if players.empty?
+      3.times do |i|
+        players.push(Player.new(:name => "プレイヤー#{i + 1}", :ai => Player::DEFAULT_AI))
+      end
+    end
+    return true
+  end
 end
