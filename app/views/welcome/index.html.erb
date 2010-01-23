@@ -1,2 +1,43 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<%- if logged_in? -%>
+<%- else -%>
+<%- form_tag session_path do -%>
+<h2>プログラミングコンテストのアカウント</h2>
+<table>
+  <tr>
+    <td class="right_align"><%= label_tag "login", "ユーザID" %></td>
+    <td><%= text_field_tag "login", @login %></td>
+  </tr>
+  <tr>
+    <td class="right_align"><%= label_tag "password", "パスワード" %></td>
+    <td><%= password_field_tag "password", nil %></td>
+  </tr>
+  <tr>
+    <td class="right_align"><%= check_box_tag 'remember_me', '1', @remember_me %></td>
+    <td><%= label_tag 'remember_me', "ログイン状態を保持する" %></td>
+  </tr>
+  <%- if flash[:error] -%>
+    <tr>
+      <td class="center_align" colspan="2"><span class="error"><%= flash[:error] %></span></td>
+    </tr>
+  <%- end -%>
+  <tr>
+    <td class="center_align" colspan="2"><%= submit_tag "ログイン" %></td>
+  </tr>
+</table>
+
+<p>
+プログラミングコンテストに参加するには事前登録が必要です。また、開催日（2010/02/13 土曜日）に松江Ruby会議02の会場(島根県松江市)に来ていただく必要があります。参加いただける方（チームでも可能）は以下の情報を記述したメールを matsue02 _at_ rubykaigi.org までお送りください。アカウントを発行後、メールにてお返事いたします。
+</p>
+
+<pre>
+宛先: matsue02 _at_ rubykaigi.org
+件名: 松江Ruby会議02プログラミングコンテスト参加希望
+
+氏名
+メールアドレス
+希望するユーザID
+プログラミングコンテストの意気込み
+</pre>
+<%- end -%>
+
+<%- end -%>

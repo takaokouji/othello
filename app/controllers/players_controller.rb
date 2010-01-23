@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PlayersController < ApplicationController
   before_filter :login_required
 

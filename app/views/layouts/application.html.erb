@@ -4,14 +4,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  <title>Players: <%= controller.action_name %></title>
+  <title>プログラミングコンテスト in 松江Ruby会議02</title>
   <%= stylesheet_link_tag 'scaffold' %>
+  <%= javascript_include_tag :defaults %>
+  <script type="text/javascript"><!--
+function loaded() {
+<%- if flash[:notice] -%>
+  <%= visual_effect "fade", "notice", :duration => 2.5 %>
+<%- end -%>
+}
+  //-->
+  </script>
 </head>
-<body>
+<body onload="loaded();">
 
-<p style="color: green"><%= flash[:notice] %></p>
+<div id="site_header">
+  <table width="100%">
+    <tr>
+      <td width="75%"><span class="notice" id="notice"><%= flash[:notice] %></span></td>
+      <td width="25%" style="text-align: right">
+        <%- if logged_in? -%>
+          <%= current_user.name ? current_user.name : current_user.login %>
+          | <%= link_to "ログアウト", logout_path, { :title => "ログアウト" } %>
+        <%- else -%>
+          ログインしていません
+        <%- end -%>
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>
+        <%= image_tag "logo.png" %>
+      </td>
+      <td>
+        <h1>プログラミングコンテスト</h1>
+        <h2 style="text-align: right; color: gray;">in 松江Ruby会議02(2010/02/13)</h2>
+        <p>
+          Rubyによるオセロの人工知能の戦い！頂点に立つRubyistは誰だ！！
+        </p>
+      </td>
+    </tr>
+  </table>
 
-<%= yield %>
+  <%- if logged_in? && @breadcrumbs -%>
+    <div id="breadcrumbs">
+      <%- @breadcrumbs[0..-2].each do |txt, path| -%>
+	<%= link_to(h(txt), path) %> >
+      <%- end -%>
+      <%= h(@breadcrumbs.last.first) %>
+    </div>
+  <%- end -%>
+</div>
+
+<div id="contents">
+  <%= yield %>
+</div>
+
+<div id="site_footer">
+  <div class="powerd_by">
+    Powered by <%= link_to("Ruby", "http://www.ruby-lang.org/") %> and <%= link_to("Ruby on Rails", "http://rubyonrails.org/") %> &#169; 2009 <%= link_to "松江Ruby会議02実行委員会", "http://regional.rubykaigi.org/matsue02" %>
+  </div>
+</div>
 
 </body>
 </html>

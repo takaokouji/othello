@@ -1,9 +1,70 @@
-body { background-color: #fff; color: #333; }
+/*
+ * カラースキーマ
+ * メイン: #D1E8FF
+ * サブ1 : #FF80BF
+ * サブ2 : #FFD1D1
+ */
+
+/*
+ * サイト全体
+ */
+body {
+    background-color: white;
+    color: #333;
+    margin: 0px;
+    padding: 0px;
+}
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
   font-size:   13px;
   line-height: 18px;
+}
+
+#site_header {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#site_header a {
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    text-decoration: none;
+}
+
+span.notice {
+    color: #FF80BF;
+}
+
+span.error {
+    color: red;
+    font-weight: bold;
+}
+
+#contents {
+    padding: 1em;
+}
+
+#site_footer {
+    margin-left: 1em;
+    margin-right: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-top: solid 1px #FFD1D1;
+    color: #FF80BF;
+    text-align: right;
+}
+
+td.left_align {
+    text-align: left;
+}
+
+td.right_align {
+    text-align: right;
+}
+
+td.center_align {
+    text-align: center;
 }
 
 pre {
@@ -15,6 +76,10 @@ pre {
 a { color: #000; }
 a:visited { color: #666; }
 a:hover { color: #fff; background-color:#000; }
+
+a img {
+    border-style:none;
+}
 
 .fieldWithErrors {
   padding: 2px;
