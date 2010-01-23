@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
 class GamesController < ApplicationController
+  before_filter :login_required
+
   # GET /games
   # GET /games.xml
   def index

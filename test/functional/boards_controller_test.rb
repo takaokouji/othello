@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class BoardsControllerTest < ActionController::TestCase
+  def setup
+    login_as :quentin
+  end
+  
   test "should get index" do
     get :index
     assert_response :success
