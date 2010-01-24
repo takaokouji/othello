@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 class GamesController < ApplicationController
   before_filter :login_required
+  
+  add_breadcrumb("ゲーム", "", :only => [:show, :start, :next_piece, :stop])
 
   # GET /games/1
   # GET /games/1.xml
   def show
-    add_breadcrumb("ゲーム", "")
     @game = Game.find(params[:id])
 
     respond_to do |format|
@@ -92,7 +93,7 @@ class GamesController < ApplicationController
     @game.start
     
     respond_to do |format|
-      format.html
+      format.html { render :action => "next_piece" }
       format.xml  { render :xml => @game }
     end
   end
