@@ -63,14 +63,14 @@ class Game < ActiveRecord::Base
     # contextに格納する要素は以下。
     # * pieces: 既存。配列の配列になっていること。
     # * candidates: おける場所
-    # * next_time: 持ち時間
-    context = Context.new(self, player, last_board.pieces, candidates, last_board.next_time)
+    context = Context.new(self, player, last_board.pieces, candidates)
 
     # solveをevalする。(Player#solve(context))
     begin
       player.load_ai
       start_time = Time.now
       end_time = start_time + last_board.next_time
+      context.instance_variable_set(:@next_time, end_time)
       Timeout.timeout(last_board.next_time) do
         player.solve(context)
         sleep(end_time - start_time) if RAILS_ENV != "test"
@@ -87,6 +87,11 @@ class Game < ActiveRecord::Base
       pieces = last_board.pieces
     end
     boards.create(:player => player, :players_context => {}, :pieces => pieces, :next_time => calc_next_time)
+  end
+  
+  # ゲームの残り時間を取得する。
+  def left_sec
+    return end_at - Time.now
   end
   
   # ゲームが終了しているかどうかを取得する。
@@ -122,18 +127,21 @@ class Game < ActiveRecord::Base
     attr_reader :next_piece
     attr_reader :next_time
     
-    def initialize(game, player, pieces, candidates, next_time)
+    def initialize(game, player, pieces, candidates)
       @game = game
       @player = player
       @pieces = Array.new(game.board_width) { |i| Array.new(game.board_height) }
       pieces.each do |x, y, player_id|
-        @pieces[x][y] = player_id
+        @pieces[x][y] = (@player.id == player_id)
       end
       @candidates = candidates
-      @next_time = next_time
       @next_piece = nil
     end
-
+    
+    def left_sec
+      return @game.left_sec
+    end
+    
     def set_next_piece(x, y)
       @next_piece = [x, y]
     end
