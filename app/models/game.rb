@@ -89,9 +89,12 @@ class Game < ActiveRecord::Base
     boards.create(:player => player, :players_context => {}, :pieces => pieces, :next_time => calc_next_time)
   end
   
-  # ゲームの終了時刻になっているかどうかを取得する。
+  # ゲームが終了しているかどうかを取得する。
   def timeup?
-    return Time.now >= end_at
+    if Time.now >= end_at
+      return true
+    end
+    return boards.last.pieces.length >= board_width * board_height
   end
   
   # ゲームの勝者を取得する。引き分けの場合はnilを返す。
