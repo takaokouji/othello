@@ -13,7 +13,7 @@
 
 class Player < ActiveRecord::Base
   # デフォルトのAI
-  DEFAULT_AI = "def solve(context)\ncontext.set_next_piece(*context.candidates.first)\nend"
+  DEFAULT_AI = "def solve(context)\n  context.set_next_piece(*context.candidates.first)\nend"
 
   belongs_to :user
   
