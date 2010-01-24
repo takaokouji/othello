@@ -18,6 +18,7 @@ class Player < ActiveRecord::Base
   DEFAULT_AI = "def solve(context)\n  context.set_next_piece(*context.candidates.first)\nend"
 
   belongs_to :user
+  has_many :games, :foreign_key => "owner_id"
   
   # aiカラムの文字列を元に、このインスタンスにだけsolveメソッドを定義する。
   def load_ai
@@ -31,11 +32,16 @@ class Player < ActiveRecord::Base
 
   # 勝った回数を取得する。
   def num_wins
-    return 0
+    return games.select { |g| g.winner == self }.length
   end
   
+  # 引き分けの回数を取得する。
+  def num_draws
+    return games.select { |g| g.winner == nil }.length
+  end
+
   # 負けた回数を取得する。
   def num_loses
-    return 0
+    return games.length - num_wins - num_draws
   end
 end

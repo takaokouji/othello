@@ -18,7 +18,7 @@
 	  <td><%= player.enable? ? "☆" : "ー" %></td>
 	  <td><%= link_to "#{player.name} (表示／編集)", player_path(player) %> </td>
 	  <td><%=h player.num_ai_lines %></td>
-	  <td><%= link_to("#{player.num_wins}勝／#{player.num_loses}敗（表示）", :controller => "players", :action => "game_results", :id => player) %></td>
+	  <td><%= "#{player.num_wins}勝#{player.num_loses}敗#{player.num_draws}分" %></td>
 	</tr>
       <%- end -%>
     </table>
