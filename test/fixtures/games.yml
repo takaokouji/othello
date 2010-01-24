@@ -1,9 +1,10 @@
 # == Schema Information
-# Schema version: 20100111055400
+# Schema version: 20100124114845
 #
 # Table name: games
 #
 #  id               :integer       not null, primary key
+#  time             :integer
 #  begin_at         :datetime
 #  end_at           :datetime
 #  first_player_id  :integer
@@ -12,6 +13,7 @@
 #  board_height     :integer
 #  created_at       :datetime
 #  updated_at       :datetime
+#  owner_id         :integer
 #
 
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html

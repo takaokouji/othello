@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # == Schema Information
-# Schema version: 20100111055400
+# Schema version: 20100124114845
 #
 # Table name: players
 #
@@ -9,6 +9,8 @@
 #  ai         :text
 #  created_at :datetime
 #  updated_at :datetime
+#  user_id    :integer
+#  enable     :boolean
 #
 
 class Player < ActiveRecord::Base

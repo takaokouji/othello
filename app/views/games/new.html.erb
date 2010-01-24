@@ -1,31 +1,58 @@
-<h1>New game</h1>
+<%- first = (@game.first_player == @game.owner) -%>
+<p>
+  <b><%= @game.owner.name %></b>
+  <%= first ? "先攻" : "後攻" %>
+<p>
 
-<% form_for(@game) do |f| %>
-  <%= f.error_messages %>
+<p>
+  <b>盤のサイズ</b>
+  <%= @game.board_width %>×<%= @game.board_height %>
+<p>
 
-  <p>
-    <%= f.label :time %><br />
-    <%= f.text_field :time %>
-  </p>
-  <p>
-    <%= f.label :board_width %><br />
-    <%= f.text_field :board_width %>
-  </p>
-  <p>
-    <%= f.label :board_height %><br />
-    <%= f.text_field :board_height %>
-  </p>
-  <p>
-    <%= f.label :first_player_id %><br />
-    <%= f.text_field :first_player_id %>
-  </p>
-  <p>
-    <%= f.label :second_player_id %><br />
-    <%= f.text_field :second_player_id %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
+<p>
+  <b>制限時間</b>
+  <%= @game.time %>分
+<p>
 
-<%= link_to 'Back', games_path %>
+<table>
+  <%- @users.each do |user| -%>
+    <%- players = user.players.find(:all, :conditions => ["enable = ? AND players.id <> ?", true, @game.owner_id]) -%>
+    <%- if players.empty? -%>
+      <tr>
+	<td><%=h user.name ? user.name : user.login %></td>
+	<td colspan="4">有効なプレイヤーはありません</td>
+      </tr>
+    <%- else -%>
+      <%- players.each_with_index do |player, i| -%>
+	<tr>
+	  <%- if i == 0 -%>
+	    <td rowspan="<%= players.length %>"><%= h(user.name ? user.name : user.login) %></td>
+	  <%- end -%>
+	  <td><%=h player.name %></td>
+	  <td><%= player.num_ai_lines %></td>
+	  <td><%= "#{player.num_wins}勝／#{player.num_loses}敗" %></td>
+	  <td>
+	    <%- if first -%>
+	      <%- @game.second_player = player -%>
+	    <%- else -%>
+	      <%- @game.first_player = player -%>
+	    <%- end -%>
+	    <%- form_for(@game) do |f| -%>
+	      <%= f.hidden_field(:owner_id) %>
+	      <%= f.hidden_field(:first_player_id) %>
+	      <%= f.hidden_field(:second_player_id) %>
+	      <%= f.hidden_field(:board_width) %>
+	      <%= f.hidden_field(:board_height) %>
+	      <%= f.hidden_field(:time) %>
+	      <%= f.submit "選択" %>
+	    <%- end -%>
+	  </td>
+	</tr>
+      <%- end -%>
+    <%- end -%>
+  <%- end -%>
+</table>
+
+<%= will_paginate @users %>
+
+<%= link_to "戻る", root_path %>

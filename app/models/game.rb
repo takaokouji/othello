@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # == Schema Information
-# Schema version: 20100111055400
+# Schema version: 20100124114845
 #
 # Table name: games
 #
 #  id               :integer       not null, primary key
+#  time             :integer
 #  begin_at         :datetime
 #  end_at           :datetime
 #  first_player_id  :integer
@@ -13,12 +14,14 @@
 #  board_height     :integer
 #  created_at       :datetime
 #  updated_at       :datetime
+#  owner_id         :integer
 #
 
 require "timeout"
 
 class Game < ActiveRecord::Base
   has_many :boards, :order => :position
+  belongs_to :owner, :class_name => "Player"
   belongs_to :first_player, :class_name => "Player"
   belongs_to :second_player, :class_name => "Player"
   before_save :init_board

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20100111055400
+# Schema version: 20100124114845
 #
 # Table name: boards
 #
@@ -9,6 +9,7 @@
 #  pieces          :text
 #  player_id       :integer
 #  players_context :text
+#  next_time       :integer
 #  created_at      :datetime
 #  updated_at      :datetime
 #
