@@ -1,6 +1,7 @@
 <%- if logged_in? -%>
 <div>
-  <h2><%= image_tag "player.png", "align" => "bottom" %>プレイヤー</h2>
+  <h2 id="players"><%= image_tag "player.png", "align" => "bottom" %>プレイヤー</h2>
+
   <%- if current_user.players.empty? -%>
     プレイヤーが登録されていません。
   <%- else -%>
@@ -15,17 +16,76 @@
       <%- current_user.players.each_with_index do |player, i| -%>
 	<tr>
 	  <td><%= player.enable? ? "☆" : "ー" %></td>
-	  <td><%= player.name %> (編集)</td>
+	  <td><%= link_to "#{player.name} (編集)", edit_player_path(player) %> </td>
 	  <td><%= player.num_ai_lines %></td>
-	  <td><%= player.num_wins %>勝／<%= player.num_loses %>敗</td>
+	  <td><%= link_to("#{player.num_wins}勝／#{player.num_loses}敗（表示）", :controller => "players", :action => "game_results", :id => player) %></td>
 	</tr>
       <%- end -%>
     </table>
   <%- end -%>
 </div>
 
+<%- enabled_players = current_user.players.select { |player| player.enable? } -%>
 <div>
-  <h2><%= image_tag "game.png", "align" => "bottom" %>ゲーム</h2>
+  <h2 id="game"><%= image_tag "game.png", "align" => "bottom" %>ゲーム</h2>
+
+  <%- if enabled_players.empty? -%>
+    <p>
+      有効なプレイヤーがひとつもありません。最初にプレイヤーを有効にしてください。
+    </p>
+  <%- else -%>
+    <%- form_tag new_game_path do -%>
+      <table>
+	<tr>
+	  <th>プレイヤー</th>
+	  <th>順番</th>
+	  <th>盤のサイズ</th>
+	  <th>制限時間</th>
+	  <th></th>
+	</tr>
+	<tr>
+	  <td>
+	    <%- enabled_players.each_with_index do |player, i| -%>
+	      <%- if i == 0 -%>
+		<%= radio_button_tag("player_id", player.id, :checked => "checked") %><%=h player.name %>
+	      <%- else -%>
+		<%= radio_button_tag("player_id", player.id) %><%=h player.name %>
+	      <%- end -%>
+	      <br />
+	    <%- end -%>
+          </td>
+	  <td>
+	    <%= radio_button_tag("first_or_second", 0, :checked => "checked") %>先攻
+	    <br />
+	    <%= radio_button_tag("first_or_second", 1) %>後攻
+	  </td>
+	  <td>
+	    <%= radio_button_tag("board_size", 0) %>8×8
+	    <br />
+	    <%= radio_button_tag("board_size", 1) %>16×16
+	    <br />
+	    <%= radio_button_tag("board_size", 2) %>32×32
+	    <br />
+	    <%= radio_button_tag("board_size", 3, :checked => "checked") %>64×64
+	    <br />
+	  </td>
+	  <td>
+	    <%= radio_button_tag("time", 0) %>1分
+	    <br />
+	    <%= radio_button_tag("time", 1) %>3分
+	    <br />
+	    <%= radio_button_tag("time", 2) %>5分
+	    <br />
+	    <%= radio_button_tag("time", 3, :checked => "checked") %>10分
+	    <br />
+	  </td>
+	  <td>
+	    <%= submit_tag "対戦相手を選ぶ" %>
+	  </td>
+	</tr>
+      </table>
+    <%- end -%>
+  <%- end -%>
 </div>
 <%- else -%>
 <%- form_tag session_path do -%>
