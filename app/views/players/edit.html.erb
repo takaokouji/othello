@@ -1,20 +1,19 @@
-<h1>Editing player</h1>
-
 <% form_for(@player) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :name %><br />
+    <%= f.check_box :enable %>
+    <%= f.label :enable, "有効／無効" %><br />
+  </p>
+  <p>
+    <%= f.label :name, "名前" %><br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :ai %><br />
-    <%= f.text_area :ai %>
+    <%= f.label :ai, "AI" %><br />
+    <%= f.text_area :ai, { "rows" => 15, "cols" => 80 } %>
   </p>
   <p>
-    <%= f.submit 'Update' %>
+    <%= f.submit '更新' %> <%= link_to 'キャンセル', @player %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @player %> |
-<%= link_to 'Back', players_path %>

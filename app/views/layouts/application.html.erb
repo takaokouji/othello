@@ -6,12 +6,16 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>プログラミングコンテスト in 松江Ruby会議02</title>
   <%= stylesheet_link_tag 'scaffold' %>
+  <%= syntax_highlighter_include_tag "code", "ruby" %>
   <%= javascript_include_tag :defaults %>
+<%- if flash[:notice] -%>
+  <%- @onload_javascript << visual_effect("fade", "notice", :duration => 2.5) -%>
+  <%- @onload_javascript << "¥n" -%>
+<%- end -%>
+
   <script type="text/javascript"><!--
 function loaded() {
-<%- if flash[:notice] -%>
-  <%= visual_effect "fade", "notice", :duration => 2.5 %>
-<%- end -%>
+<%=h @onload_javascript %>
 }
   //-->
   </script>
