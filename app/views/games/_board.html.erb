@@ -1,0 +1,76 @@
+<%-
+   num_first_player_pieces = 0
+   num_second_player_pieces = 0
+   if game.end_at
+     left_sec = game.end_at - Time.now
+   end
+   pieces = Array.new(game.board_height) { |i| Array.new(game.board_width) }
+   game.boards.last.pieces.each do |x, y, player_id|
+     pieces[y][x] = player_id
+   end
+-%>
+
+<table border="1">
+<tr>
+<td>　</td>
+<%-
+   game.board_width.times do |i|
+-%>
+<td><%= i + 1 %></td>
+<%-
+   end
+-%>
+</tr>
+<%-
+   pieces.each_with_index do |ary, y|
+-%>
+<tr>
+<td><%= y + 1 %></td>
+<%-
+     ary.each_with_index do |player_id, x|
+-%>
+<td>
+<%= 
+    case player_id
+    when game.first_player_id
+      num_first_player_pieces += 1
+      "●"
+    when game.second_player_id
+      num_second_player_pieces += 1
+      "○"
+    else
+      "　"
+    end
+%>
+</td>
+<%-
+     end
+-%>
+</tr>
+<%-
+   end
+-%>
+</table>
+
+<table>
+  <tr>
+    <td><%=h game.first_player.name %></td>
+    <td><b><%= num_first_player_pieces %></b></td>
+    <td>●</td>
+    <td>○</td>
+    <td><b><%= num_second_player_pieces %></b></td>
+    <td><%=h game.second_player.name %></td>
+  </tr>
+</table>
+
+<p>
+  <%- if left_sec -%>
+    <%- if left_sec <= 0 -%>
+      <b>終了</b>
+    <%- else -%>
+      <b>残り<%= left_sec.to_i %>秒</b>
+    <%- end -%>
+  <%- else -%>
+    <b>Ready</b>
+  <%- end -%>
+<p>

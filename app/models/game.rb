@@ -34,8 +34,8 @@ class Game < ActiveRecord::Base
   # ゲームを開始する。
   def start
     # TODO: すでにbegin_atとend_atが設定されていた場合は例外。
-    begin_at = Time.now
-    end_at = begin_at + time * 60
+    self.begin_at = Time.now
+    self.end_at = begin_at + time * 60
     save!
   end
 
@@ -87,6 +87,27 @@ class Game < ActiveRecord::Base
       pieces = last_board.pieces
     end
     boards.create(:player => player, :players_context => {}, :pieces => pieces, :next_time => calc_next_time)
+  end
+  
+  # ゲームの終了時刻になっているかどうかを取得する。
+  def timeup?
+    return Time.now >= end_at
+  end
+  
+  # ゲームの勝者を取得する。引き分けの場合はnilを返す。
+  def winner
+    last_board = boards.last
+    player_id_pieces = last_board.pieces.group_by { |piece| piece[2] }
+    first_player_pieces = player_id_pieces[first_player_id]
+    second_player_pieces = player_id_pieces[second_player_id]
+    case first_player_pieces.length <=> second_player_pieces.length
+    when 1
+      return first_player
+    when -1
+      return second_player
+    else
+      return nil
+    end
   end
 
   # solveメソッドに渡すコンテキストを表現する。

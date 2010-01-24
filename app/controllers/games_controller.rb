@@ -103,8 +103,11 @@ class GamesController < ApplicationController
     @game.next_piece
 
     respond_to do |format|
-      format.html
-      format.xml  { render :xml => @game }
+      if @game.timeup?
+        format.html { redirect_to(:action => "stop", :id => @game) }
+      else
+        format.html
+      end
     end
   end
 
@@ -114,7 +117,7 @@ class GamesController < ApplicationController
     @game.stop
 
     respond_to do |format|
-      format.html { redirect_to(root_path) }
+      format.html
     end
   end
 end

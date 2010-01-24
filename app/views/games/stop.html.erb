@@ -1,0 +1,11 @@
+<%= render(:partial => "board", :locals => { :game => @game }) %>
+
+<p>
+  <%- if winner = @game.winner -%>
+    <%=h winner.name %>の勝ちです。おめでとうございます。
+  <%- else -%>  
+    引き分けです。
+  <%- end -%>
+</p>
+
+<%= link_to '戻る', root_path %>
