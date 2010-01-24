@@ -5,8 +5,13 @@
      left_sec = game.end_at - Time.now
    end
    pieces = Array.new(game.board_height) { |i| Array.new(game.board_width) }
-   game.boards.last.pieces.each do |x, y, player_id|
+   last_board = game.boards.last
+   last_board.pieces.each do |x, y, player_id|
      pieces[y][x] = player_id
+   end
+   next_player = (last_board.player == game.first_player ? game.second_player : game.first_player)
+   last_board.candidates(next_player).each do |x, y|
+     pieces[y][x] = -1
    end
 -%>
 
@@ -38,6 +43,8 @@
     when game.second_player_id
       num_second_player_pieces += 1
       "○"
+    when -1
+      "！"
     else
       "　"
     end
