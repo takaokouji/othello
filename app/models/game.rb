@@ -77,6 +77,7 @@ class Game < ActiveRecord::Base
       end
     rescue Exception => e
       logger.debug(e.inspect)
+      logger.debug(e.backtrace.join("\n"))
     end
 
     if context.next_piece
@@ -144,6 +145,45 @@ class Game < ActiveRecord::Base
     
     def set_next_piece(x, y)
       @next_piece = [x, y]
+    end
+
+    def count_changed_pieces(player, pieces, x, y)
+      board = pieces_to_board(pieces)
+      return board.count_changed_pieces(flag_to_player(player), x, y)
+    end
+
+    def changed_pieces(player, pieces, x, y)
+      board = pieces_to_board(pieces)
+      return board.changed_pieces(flag_to_player(player), x, y)
+    end
+
+    def next_candidates(player, pieces)
+      board = pieces_to_board(pieces)
+      return board.candidates(flag_to_player(player))
+    end
+
+    private
+
+    def pieces_to_board(pieces)
+      boards_pieces = []
+      pieces.each do |x, y, player|
+        target_player = flag_to_player(player)
+        if target_player
+          boards_pieces << [x, y, target_player.id]
+        end
+      end
+      return Board.new(:game => @game, :pieces => boards_pieces)
+    end
+
+    def flag_to_player(flag)
+      case flag
+      when true
+        return @player
+      when false
+        return @game.first_player == @player ? @game.second_player : @game.first_player
+      else
+        return nil
+      end
     end
   end
 

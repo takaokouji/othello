@@ -5,25 +5,6 @@ class PlayersControllerTest < ActionController::TestCase
     login_as :quentin
   end
   
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:players)
-  end
-
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create player" do
-    assert_difference('Player.count') do
-      post :create, :player => { }
-    end
-
-    assert_redirected_to player_path(assigns(:player))
-  end
-
   test "should show player" do
     get :show, :id => players(:player1).to_param
     assert_response :success
@@ -37,13 +18,5 @@ class PlayersControllerTest < ActionController::TestCase
   test "should update player" do
     put :update, :id => players(:player1).to_param, :player => { }
     assert_redirected_to player_path(assigns(:player))
-  end
-
-  test "should destroy player" do
-    assert_difference('Player.count', -1) do
-      delete :destroy, :id => players(:player1).to_param
-    end
-
-    assert_redirected_to players_path
   end
 end

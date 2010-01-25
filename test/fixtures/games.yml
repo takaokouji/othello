@@ -23,5 +23,6 @@ game1:
   time: 10
   board_width: 50
   board_height: 50
+  owner_id: 1
   first_player_id: 1
   second_player_id: 2

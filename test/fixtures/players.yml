@@ -17,6 +17,7 @@
 player1:
   id: 1
   name: Player1
+  user_id: 1
   ai: |
     def solve(context)
       context.set_next_piece(*context.candidates.first)
@@ -25,6 +26,7 @@ player1:
 player2:
   id: 2
   name: Player2
+  user_id: 1
   ai: |
     def solve(context)
       context.set_next_piece(*context.candidates.first)
