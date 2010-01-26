@@ -165,14 +165,16 @@ class Game < ActiveRecord::Base
     private
 
     def pieces_to_board(pieces)
-      boards_pieces = []
-      pieces.each do |x, y, player|
-        target_player = flag_to_player(player)
-        if target_player
-          boards_pieces << [x, y, target_player.id]
+      board_pieces = []
+      pieces.each_with_index do |row, x|
+        row.each_with_index do |player, y|
+          target_player = flag_to_player(player)
+          if target_player
+            board_pieces << [x, y, target_player.id]
+          end
         end
       end
-      return Board.new(:game => @game, :pieces => boards_pieces)
+      return Board.new(:game => @game, :pieces => board_pieces)
     end
 
     def flag_to_player(flag)
