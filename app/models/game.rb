@@ -60,10 +60,11 @@ class Game < ActiveRecord::Base
     candidates = last_board.candidates(player)
 
     # Playerのsolveメソッドで使うためのcontextを用意する。
-    # contextに格納する要素は以下。
-    # * pieces: 既存。配列の配列になっていること。
-    # * candidates: おける場所
     context = Context.new(self, player, last_board.pieces, candidates)
+    last_players_board = boards.find(:first, :conditions => ["player_id = ?", player.id], :order => "position DESC")
+    if last_players_board
+      context.instance_variable_set(:@context, last_players_board.players_context)
+    end
 
     # solveをevalする。(Player#solve(context))
     begin
@@ -86,6 +87,12 @@ class Game < ActiveRecord::Base
       end
     end
 
+    if context.context.is_a?(Hash) && context.context.length > 0
+      players_context = context.context
+    else
+      players_context = {}
+    end
+
     if context.next_piece
       # contextに設定された駒の位置から新しいBoard(pieces)を作る。
       pieces = last_board.set_piece(player, *context.next_piece)
@@ -93,7 +100,7 @@ class Game < ActiveRecord::Base
       # contextに設定されていない場合はパスだとみなす。
       pieces = last_board.pieces
     end
-    boards.create(:player => player, :players_context => {}, :pieces => pieces, :next_time => calc_next_time)
+    boards.create(:player => player, :players_context => players_context, :pieces => pieces, :next_time => calc_next_time)
   end
   
   # ゲームの残り時間を取得する。
@@ -133,6 +140,7 @@ class Game < ActiveRecord::Base
     attr_reader :candidates
     attr_reader :next_piece
     attr_reader :next_time
+    attr_reader :context
     
     def initialize(game, player, pieces, candidates)
       @game = game
@@ -143,6 +151,7 @@ class Game < ActiveRecord::Base
       end
       @candidates = candidates
       @next_piece = nil
+      @context = {}
     end
     
     def left_sec

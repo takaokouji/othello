@@ -52,6 +52,20 @@ EOP
     expected = Board.new(:player => game.first_player, :position => 4, :players_context => {}, :pieces => pieces)
     assert_board_equal(expected, game.boards.last)
   end
+
+  test "next_piece:プレイヤーのコンテキストを格納する" do
+    game = games(:game1)
+    game.first_player = players(:player3)
+    assert_difference("game.boards.length") do
+      game.next_piece
+    end
+    expected = {
+      "data1" => "player's context data",
+      "data2" => [1, 2, 3],
+    }
+    game.reload
+    assert_equal(expected, game.boards.last.players_context)
+  end
   
   private
 

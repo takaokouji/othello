@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # == Schema Information
 # Schema version: 20100124114845
 #
@@ -20,6 +21,7 @@ class Board < ActiveRecord::Base
   belongs_to :player
   acts_as_list :scope => :game
   serialize :pieces
+  serialize :players_context
 
   # +player+ が配置できる位置を配列で取得する。
   def candidates(player)

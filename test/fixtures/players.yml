@@ -31,3 +31,13 @@ player2:
     def solve(context)
       context.set_next_piece(*context.candidates.first)
     end
+
+player3:
+  id: 3
+  name: Player3
+  user_id: 1
+  ai: |
+    def solve(context)
+      context.context["data1"] = "player's context data"
+      context.context["data2"] = [1, 2, 3]
+    end
