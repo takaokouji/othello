@@ -72,12 +72,18 @@ class Game < ActiveRecord::Base
       end_time = start_time + last_board.next_time
       context.instance_variable_set(:@next_time, end_time)
       Timeout.timeout(last_board.next_time) do
-        player.solve(context)
+        t = Thread.start {
+          $SAFE = 3
+          player.solve(context)
+        }
+        t.join
         sleep(end_time - start_time) if RAILS_ENV != "test"
       end
     rescue Exception => e
-      logger.debug(e.inspect)
-      logger.debug(e.backtrace.join("\n"))
+      if !e.is_a?(Timeout::Error)
+        logger.debug(e.inspect)
+        logger.debug(e.backtrace.join("\n"))
+      end
     end
 
     if context.next_piece
