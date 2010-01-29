@@ -93,12 +93,10 @@ class Game < ActiveRecord::Base
       players_context = {}
     end
 
-    if context.next_piece
-      # contextに設定された駒の位置から新しいBoard(pieces)を作る。
+    pieces = last_board.pieces
+    begin
       pieces = last_board.set_piece(player, *context.next_piece)
-    else
-      # contextに設定されていない場合はパスだとみなす。
-      pieces = last_board.pieces
+    rescue ArgumentError
     end
     boards.create(:player => player, :players_context => players_context, :pieces => pieces, :next_time => calc_next_time)
   end
