@@ -67,6 +67,33 @@ EOP
     assert_equal(expected, game.boards.last.players_context)
   end
   
+  test "last_players_board" do
+    game = games(:game1)
+    assert_equal(nil, game.last_players_board(game.first_player))
+    assert_equal(nil, game.last_players_board(game.second_player))
+    
+    # 1手
+    game.next_piece
+    assert_equal(game.boards[1], game.last_players_board(game.first_player))
+    assert_equal(nil, game.last_players_board(game.second_player))
+
+    # 2手
+    game.next_piece
+    assert_equal(game.boards[1], game.last_players_board(game.first_player))
+    assert_equal(game.boards[2], game.last_players_board(game.second_player))
+
+    # 3手
+    game.next_piece
+    assert_equal(game.boards[3], game.last_players_board(game.first_player))
+    assert_equal(game.boards[2], game.last_players_board(game.second_player))
+    
+    # 4手
+    game.next_piece
+    assert_equal(game.boards[3], game.last_players_board(game.first_player))
+    assert_equal(game.boards[4], game.last_players_board(game.second_player))
+  end
+
+  
   private
 
   def assert_board_equal(expected, actual)
@@ -183,6 +210,10 @@ class Game
       assert_set_equal(expected, @context.next_candidates(false, pieces))
     end
 
+    test "rivals_previous_piece" do
+      assert_equal(nil, @context.rivals_previous_piece)
+    end
+
     private
 
     # 文字列からpiecesの配列を生成する。
@@ -204,5 +235,24 @@ class Game
 　●●●●●　
 　　　　　　　
 EOP
+  end
+
+  # 2手進んだ状態
+  class ContextTest__2_boards < ActiveSupport::TestCase
+    def setup
+      @game = games(:game1)
+      2.times do
+        @game.next_piece
+      end
+      last_board = @game.boards.last
+      player = @game.first_player
+      @context = Context.new(@game, player, last_board.pieces, last_board.candidates(player))
+    end
+
+    test "rivals_previous_piece" do
+      game = @context.game
+      board = game.last_players_board(@game.second_player)
+      assert_equal([board.players_piece_x, board.players_piece_y], @context.rivals_previous_piece)
+    end
   end
 end

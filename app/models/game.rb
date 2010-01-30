@@ -95,10 +95,11 @@ class Game < ActiveRecord::Base
 
     pieces = last_board.pieces
     begin
+      players_piece_x, players_piece_y = *context.next_piece
       pieces = last_board.set_piece(player, *context.next_piece)
     rescue ArgumentError
     end
-    boards.create(:player => player, :players_context => players_context, :pieces => pieces, :next_time => calc_next_time)
+    boards.create(:player => player, :players_piece_x => players_piece_x, :players_piece_y => players_piece_y, :players_context => players_context, :pieces => pieces, :next_time => calc_next_time)
   end
   
   # ゲームの残り時間を取得する。
@@ -128,6 +129,11 @@ class Game < ActiveRecord::Base
     else
       return nil
     end
+  end
+  
+  # プレイヤーが最後に打った手を記録したBoardを取得する。
+  def last_players_board(player)
+    return boards.find(:first, :conditions => ["player_id = ?", player.id], :order => "position DESC")
   end
 
   # solveメソッドに渡すコンテキストを表現する。
@@ -173,6 +179,16 @@ class Game < ActiveRecord::Base
     def next_candidates(player, pieces)
       board = pieces_to_board(pieces)
       return board.candidates(flag_to_player(player))
+    end
+
+    def rival
+      return game.first_player == @player ? game.second_player : game.first_player
+    end
+    
+    # 相手が前回打った手の位置(x,y)を取得する。
+    def rivals_previous_piece
+      board = game.last_players_board(rival)
+      return board ? [board.players_piece_x, board.players_piece_y] : nil
     end
 
     private
