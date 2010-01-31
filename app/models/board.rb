@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # == Schema Information
-# Schema version: 20100124114845
+# Schema version: 20100129033650
 #
 # Table name: boards
 #
@@ -13,6 +13,8 @@
 #  next_time       :integer
 #  created_at      :datetime
 #  updated_at      :datetime
+#  players_piece_x :integer
+#  players_piece_y :integer
 #
 
 # 盤を表現する。
