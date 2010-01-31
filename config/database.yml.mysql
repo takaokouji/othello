@@ -8,13 +8,13 @@ common: &common
   #socket: /tmp/mysql.sock
 
 development:
-  database: brushup_development
+  database: othello_development
   <<: *common
 
 test:
-  database: brushup_test
+  database: othello_test
   <<: *common
 
 production:
-  database: brushup
+  database: othello
   <<: *common
