@@ -18,6 +18,9 @@ class PlayersController < ApplicationController
 
   # GET /players/1/edit
   def edit
+    if current_user.guest?
+      raise "ゲストアカウントはプレイヤーの情報を編集できません"
+    end
     add_breadcrumb(@player.name, "player_path(@player)")
     add_breadcrumb("編集", "")
   end
@@ -25,6 +28,9 @@ class PlayersController < ApplicationController
   # PUT /players/1
   # PUT /players/1.xml
   def update
+    if current_user.guest?
+      raise "ゲストアカウントはプレイヤーの情報を編集できません"
+    end
     respond_to do |format|
       if @player.update_attributes(params[:player])
         flash[:notice] = 'Player was successfully updated.'

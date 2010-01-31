@@ -18,7 +18,7 @@ class Player < ActiveRecord::Base
   DEFAULT_AI = "def solve(context)\n  context.set_next_piece(*context.candidates.first)\nend"
 
   belongs_to :user
-  has_many :games, :foreign_key => "owner_id"
+  has_many :games, :foreign_key => "owner_id", :dependent => :destroy
   
   # aiカラムの文字列を元に、このインスタンスにだけsolveメソッドを定義する。
   def load_ai

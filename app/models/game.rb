@@ -20,7 +20,7 @@
 require "timeout"
 
 class Game < ActiveRecord::Base
-  has_many :boards, :order => :position
+  has_many :boards, :order => :position, :dependent => :destroy
   belongs_to :owner, :class_name => "Player"
   belongs_to :first_player, :class_name => "Player"
   belongs_to :second_player, :class_name => "Player"

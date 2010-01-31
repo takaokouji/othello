@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  has_many :players, :order => "id"
+  has_many :players, :order => "id", :dependent => :destroy
   before_save :init_players
 
   validates_presence_of     :login

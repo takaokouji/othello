@@ -13,5 +13,7 @@
   <%= code(@player.ai) %>
 </p>
 
+<%- if !current_user.guest? -%>
 <%= link_to '編集', edit_player_path(@player) %> |
+<%- end -%>
 <%= link_to '戻る', root_path %>

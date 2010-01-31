@@ -88,9 +88,9 @@
   <%- end -%>
 </div>
 <%- else -%>
-<%- form_tag session_path do -%>
 <h2>プログラミングコンテストのアカウント</h2>
 <table>
+<%- form_tag session_path do -%>
   <tr>
     <td class="right_align"><%= label_tag "login", "ユーザID" %></td>
     <td><%= text_field_tag "login", @login %></td>
@@ -111,6 +111,16 @@
   <tr>
     <td class="center_align" colspan="2"><%= submit_tag "ログイン" %></td>
   </tr>
+<%- end -%>
+<%- form_tag session_path do -%>
+  <tr>
+    <td class="center_align" colspan="2">
+      <%= hidden_field_tag "login", "guest" %>
+      <%= hidden_field_tag "password", "qwerty" %>
+      <%= submit_tag "ゲストアカウントでログイン" %>
+    </td>
+  </tr>
+<%- end -%>
 </table>
 
 <p>
@@ -126,6 +136,5 @@
 希望するユーザID
 プログラミングコンテストの意気込み
 </pre>
-<%- end -%>
 
 <%- end -%>
