@@ -1,0 +1,20 @@
+common: &common
+  adapter: mysql
+  encoding: utf8
+  pool: 5
+  username: root
+  password:
+  host: localhost
+  #socket: /tmp/mysql.sock
+
+development:
+  database: brushup_development
+  <<: *common
+
+test:
+  database: brushup_test
+  <<: *common
+
+production:
+  database: brushup
+  <<: *common
